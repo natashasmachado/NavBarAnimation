@@ -21,11 +21,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   
   
   var stackView: UIStackView!
-  let imageNames = ["Oreo", "Pizza", "Pop-Tarts", "Popsicle", "Ramen"]
   let snackName = UILabel()
   let titleLabel = UILabel()
+  var snackNames = ["Oreo", "Pizza", "Pop-Tarts", "Popsicle", "Ramen"]
+  var selectedSnackName: String?
+ 
   
-  
+
   var isPlusIconVisible = true {
     didSet {
       let rotationAngle = isPlusIconVisible ? 0.0 : CGFloat.pi / 4.0
@@ -40,12 +42,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
     view.backgroundColor = .white
     setupStackView()
     tableView.dataSource = self
     tableView.delegate = self
-    tableView.register(ImageTableViewCell.self, forCellReuseIdentifier: "ImageCell")
-    
+    tableView.register(UITableViewCell.self, forCellReuseIdentifier: "SnackCell")
+
   }
   
   private func setupStackView() {
@@ -56,7 +59,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     stackView.alignment = .fill
     
     var index = 0
-    for imageName in imageNames {
+    for imageName in snackNames {
       let imageView = UIImageView(image: UIImage(named: imageName))
       imageView.contentMode = .scaleAspectFit
       stackView.addArrangedSubview(imageView)
@@ -68,13 +71,33 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
       index += 1
     }
     
+    for (index, subview) in stackView.arrangedSubviews.enumerated() {
+      guard let imageView = subview as? UIImageView else { continue }
+      
+      let button = UIButton(type: .system)
+      button.tag = index
+      button.addTarget(self, action: #selector(snackButtonPressed(_:)), for: .touchUpInside)
+      imageView.isUserInteractionEnabled = true
+      
+      imageView.addSubview(button)
+      
+      button.translatesAutoresizingMaskIntoConstraints = false
+      NSLayoutConstraint.activate([
+        button.topAnchor.constraint(equalTo: imageView.topAnchor),
+        button.leadingAnchor.constraint(equalTo: imageView.leadingAnchor),
+        button.trailingAnchor.constraint(equalTo: imageView.trailingAnchor),
+        button.bottomAnchor.constraint(equalTo: imageView.bottomAnchor)
+      ])
+    }
+    
+    
     grayView.addSubview(stackView)
     
     
-        titleLabel.text = "Snacks"
-        titleLabel.textAlignment = .center
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    titleLabel.text = "Snacks"
+    titleLabel.textAlignment = .center
+    titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
+    titleLabel.translatesAutoresizingMaskIntoConstraints = false
     
     grayView.addSubview(titleLabel)
     
@@ -94,40 +117,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   
   
   @objc private func handleImageTap(_ sender: UITapGestureRecognizer) {
-    guard let imageView = sender.view as? UIImageView else {
-      return
-    }
-    
-    guard let index = stackView.arrangedSubviews.firstIndex(of: imageView) else {
-      return
-    }
-    
-    let label: UILabel = self.snackName
-    
-    switch index {
-    case 0:
-      label.text = "Oreo"
-    case 1:
-      label.text = "Pizza"
-    case 2:
-      label.text = "Pop-Tarts"
-    case 3:
-      label.text = "Popsicle"
-    case 4:
-      label.text = "Ramen"
-    default:
-      break
-    }
+    _ = sender.view as? UIImageView
   }
-  
   
   
   @IBAction func plusIconPressed(_ sender: UIButton) {
     isPlusIconVisible.toggle()
-    
-    let labelText = "Add Snacks"
-    titleLabel.text = labelText
-    
+    titleLabel.text = "Add Snacks"
     
     UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
       self.grayViewHeightConstraint.constant = self.isPlusIconVisible ? 88 : 200
@@ -138,28 +134,26 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   }
   
   
-  
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return imageNames.count
+      return snackNames.count
   }
   
-  
+
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "ImageCell", for: indexPath) as! ImageTableViewCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: "SnackCell", for: indexPath)
+      let snackName = snackNames[indexPath.row]
+      cell.textLabel?.text = snackName
+      cell.textLabel?.isHidden = true
     
-    if indexPath.row < imageNames.count {
-      let imageName = imageNames[indexPath.row]
-      cell.snackName?.text = imageName
-      cell.snackName?.isHidden = false
-    } else {
-      cell.snackName.text = ""
-      cell.snackName.isHidden = true  
-    }
-    
-    
-    return cell
+      return cell
   }
-  
-  
+   
+  @objc func snackButtonPressed(_ sender: UIButton) {
+    let index = sender.tag
+    let cell = tableView.dequeueReusableCell(withIdentifier: "SnackCell")
+    guard index >= 0 && index < snackNames.count else { return }
+    cell?.textLabel?.isHidden = false
+    tableView.reloadData()
+  }
   
 }

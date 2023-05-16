@@ -9,6 +9,8 @@ import UIKit
 
 class ImageTableViewCell: UITableViewCell {
   
+  
+  @IBOutlet weak var nameLabel: UILabel!
   @IBOutlet var snackName: UILabel!
 
           
