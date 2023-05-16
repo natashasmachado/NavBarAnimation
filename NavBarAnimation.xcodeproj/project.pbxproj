@@ -13,7 +13,6 @@
 		7E4A54752A12905100B1CCDD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E4A54732A12905100B1CCDD /* Main.storyboard */; };
 		7E4A54772A12905200B1CCDD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E4A54762A12905200B1CCDD /* Assets.xcassets */; };
 		7E4A547A2A12905200B1CCDD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E4A54782A12905200B1CCDD /* LaunchScreen.storyboard */; };
-		7E4A54822A1349C500B1CCDD /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4A54812A1349C500B1CCDD /* TableViewController.swift */; };
 		7E4A54842A134E2F00B1CCDD /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4A54832A134E2F00B1CCDD /* ImageTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -26,7 +25,6 @@
 		7E4A54762A12905200B1CCDD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7E4A54792A12905200B1CCDD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7E4A547B2A12905200B1CCDD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7E4A54812A1349C500B1CCDD /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		7E4A54832A134E2F00B1CCDD /* ImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -63,7 +61,6 @@
 				7E4A546D2A12905100B1CCDD /* AppDelegate.swift */,
 				7E4A546F2A12905100B1CCDD /* SceneDelegate.swift */,
 				7E4A54712A12905100B1CCDD /* ViewController.swift */,
-				7E4A54812A1349C500B1CCDD /* TableViewController.swift */,
 				7E4A54832A134E2F00B1CCDD /* ImageTableViewCell.swift */,
 				7E4A54732A12905100B1CCDD /* Main.storyboard */,
 				7E4A54762A12905200B1CCDD /* Assets.xcassets */,
@@ -148,7 +145,6 @@
 				7E4A546E2A12905100B1CCDD /* AppDelegate.swift in Sources */,
 				7E4A54842A134E2F00B1CCDD /* ImageTableViewCell.swift in Sources */,
 				7E4A54702A12905100B1CCDD /* SceneDelegate.swift in Sources */,
-				7E4A54822A1349C500B1CCDD /* TableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
