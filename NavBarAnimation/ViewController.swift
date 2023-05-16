@@ -23,6 +23,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   var stackView: UIStackView!
   let imageNames = ["Oreo", "Pizza", "Pop-Tarts", "Popsicle", "Ramen"]
   let snackName = UILabel()
+  let titleLabel = UILabel()
   
   
   var isPlusIconVisible = true {
@@ -69,12 +70,23 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     grayView.addSubview(stackView)
     
+    
+        titleLabel.text = "Snacks"
+        titleLabel.textAlignment = .center
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    
+    grayView.addSubview(titleLabel)
+    
     NSLayoutConstraint.activate([
-      stackView.topAnchor.constraint(equalTo: grayView.topAnchor, constant: 45),
+      stackView.topAnchor.constraint(equalTo: grayView.topAnchor, constant: 65),
       stackView.widthAnchor.constraint(equalTo: grayView.widthAnchor),
       stackView.leadingAnchor.constraint(equalTo: grayView.leadingAnchor),
       stackView.trailingAnchor.constraint(equalTo: grayView.trailingAnchor),
       stackView.bottomAnchor.constraint(equalTo: grayView.bottomAnchor),
+      
+      titleLabel.centerXAnchor.constraint(equalTo: grayView.centerXAnchor),
+      titleLabel.centerYAnchor.constraint(equalTo: grayView.topAnchor, constant: 70),
     ])
     
     stackView.isHidden = true
@@ -112,12 +124,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   
   @IBAction func plusIconPressed(_ sender: UIButton) {
     isPlusIconVisible.toggle()
+    
+    let labelText = "Add Snacks"
+    titleLabel.text = labelText
+    
+    
     UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
       self.grayViewHeightConstraint.constant = self.isPlusIconVisible ? 88 : 200
       self.view.layoutIfNeeded()
     }, completion: nil)
+    
     print("plus icon pressed")
   }
+  
+  
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return imageNames.count
@@ -136,15 +156,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
       cell.snackName.isHidden = true  
     }
     
-    // Configure the tap action closure
-    cell.tapAction = { [weak self] tappedImageName in
-      if let index = self?.imageNames.firstIndex(of: tappedImageName) {
-        let indexPath = IndexPath(row: index, section: 0)
-        if let visibleCell = tableView.cellForRow(at: indexPath) as? ImageTableViewCell {
-          visibleCell.snackName.isHidden = !visibleCell.snackName.isHidden
-        }
-      }
-    }
     
     return cell
   }

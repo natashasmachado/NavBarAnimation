@@ -10,9 +10,7 @@ import UIKit
 class ImageTableViewCell: UITableViewCell {
   
   @IBOutlet var snackName: UILabel!
-  
-  
-  var tapAction: ((String) -> Void)?
+
           
 
           
